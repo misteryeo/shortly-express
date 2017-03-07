@@ -86,6 +86,23 @@ function(req, res, next) {
 // Write your authentication routes here
 /************************************************************/
 
+// From docs: app.post(path, callback [, callback ...])
+
+// ADD USER INVOKING addUser FROM user.js
+app.post('/signup', 
+ function(req, res) {
+   // ADD USER ON SIGN-UP
+   return Users.addUser(req.body)
+   // LET THEM IN
+   .then(function(results) {
+     res.redirect('/');
+   })
+   // KICK EM OUT
+   .catch(function(error) {
+     res.redirect('/signup');
+   })
+});
+
 
 
 /************************************************************/
