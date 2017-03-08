@@ -11,9 +11,29 @@ var addUser = function(user) {
   return db.queryAsync(queryString, userDetails);
 };
 
+// // CHECK USER EXISTS
+// var checkUserExists = function (req, res, next) {
+//   var queryString = 'SELECT * FROM users where username = ?';
+//   db.queryAsync(queryString, [user.username])
+//   .then(function(results) {
+//     console.log('results: ', results);
+//     if (results.length === 0) {
+//       res.redirect('/login');
+//     } else {
+//       res.redirect('/signup');
+//     }
+//   });
+// };
+
+// LOGIN USER
+var loginUser = function(user) {
+  var queryString = 'SELECT password FROM users WHERE username = ?';
+  return db.queryAsync(queryString, [user.username])
+}
+
 module.exports = {
-  addUser: addUser
+  addUser: addUser,
+  loginUser: loginUser,
+  checkUserExists: checkUserExists
 };
-
-
 

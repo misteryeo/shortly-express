@@ -88,11 +88,21 @@ function(req, res, next) {
 
 // From docs: app.post(path, callback [, callback ...])
 
+// RENDER SIGN UP AND LOGIN PAGES
+app.get('/signup', function(req, res) {
+  res.render('signup');
+});
+
+app.get('/login', function(req, res) {
+  res.render('login');
+});
+ 
+
 // ADD USER INVOKING addUser FROM user.js
-app.post('/signup', 
- function(req, res) {
+app.post('/signup', function(req, res) {
    // ADD USER ON SIGN-UP
-   return Users.addUser(req.body)
+   // ******DONE THIS NEED TO RETURN?
+   Users.addUser(req.body)
    // LET THEM IN
    .then(function(results) {
      res.redirect('/');
@@ -103,6 +113,30 @@ app.post('/signup',
    })
 });
 
+app.post('/login', function(req, res) {
+  // LOGIN USER
+  return Users.loginUser(req.body)
+  .then(function(results) {
+    var userPass = util.passwordHash(req.body);
+    console.log('This is the userPass: ', userPass);
+    console.log('This is the results[0][0].password', results[0][0]);
+    if (results.length === 0) {
+      res.redirect('/login'); 
+    } else if (userPass !== results[0][0].password) {
+      res.redirect('/login');
+    } else {
+      res.redirect('/');
+    }
+  })
+});
+
+// app.post('/logout', User.logoutUser);
+
+// In your user.js file, this is a module you export
+// var logoutUser = function(req, res, next) {
+//   var user = req.body;
+
+// };
 
 
 /************************************************************/
