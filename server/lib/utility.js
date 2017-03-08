@@ -21,6 +21,9 @@ exports.isValidUrl = function(url) {
 // Add additional utility functions below
 /************************************************************/
 
+// REFERENCED: https://docs.nodejitsu.com/articles/cryptography/how-to-use-crypto-module/
+// SHOULD THIS BE A MIDDLEWARE INSTEAD? https://scotch.io/tutorials/route-middleware-to-check-if-a-user-is-authenticated-in-node-js
+// THIS ISN'T ASYNCHRONOUS?
 exports.passwordHash = function(data) {
   var hash = crypto.createHash('sha1');
   hash.update(data.password);
