@@ -27,14 +27,26 @@ module.exports = function(db) {
   /*          Add additional schema queries here              */
   /************************************************************/
   .then(function() {
-    // Create clicks table
+    // Create users table
     return db.queryAsync('CREATE TABLE IF NOT EXISTS users (\
       id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
       username VARCHAR(50) UNIQUE,\
       password VARCHAR(70),\
       timestamp TIMESTAMP\
       );');
+    // salt? VARCHCHAT(40)?
   })
+  .then(function() {
+    // Create sessions table
+    return db.queryAsync('CREATE TABLE IF NOT EXISTS sessions (\
+      id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,\
+      hash VARCHAR(50),\
+      user_id VARCHAR(50),\
+      timestamp TIMESTAMP\
+      );');
+    // salt? VARCHCHAT(40)?
+  })
+  // NO FOREIGN KEY FOR SESSIONS TABLE BECAUSE WE ARE NOT USING ORM
 
   .error(function(err) {
     console.log(err);
