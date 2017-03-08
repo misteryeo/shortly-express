@@ -118,9 +118,10 @@ app.post('/login', function(req, res) {
   return Users.loginUser(req.body)
   .then(function(results) {
     var userPass = util.passwordHash(req.body);
-    console.log('This is the userPass: ', userPass);
-    console.log('This is the results[0][0].password', results[0][0]);
-    if (results.length === 0) {
+    // WHY DID THIS NEED TO BE HERE?
+    if(!results[0][0]) {
+      res.redirect('/login');
+    } else if (results.length === 0) {
       res.redirect('/login'); 
     } else if (userPass !== results[0][0].password) {
       res.redirect('/login');

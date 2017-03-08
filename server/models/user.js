@@ -33,7 +33,6 @@ var loginUser = function(user) {
 
 module.exports = {
   addUser: addUser,
-  loginUser: loginUser,
-  checkUserExists: checkUserExists
+  loginUser: loginUser
 };
 
